@@ -1,12 +1,12 @@
 // @todo: Темплейт карточки
 
 // @todo: DOM узлы
-const cardTemplate = document.querySelector('#card-template').content;
+const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
 const cardList = document.querySelector('.places__list');
 
 // @todo: Функция создания карточки
 function addCard(card, deleteCardClick) {
-  const newCard = cardTemplate.querySelector('.card').cloneNode(true);
+  const newCard = cardTemplate.cloneNode(true);
   const cardImg =newCard.querySelector('.card__image');
   cardImg.src=card.link;
   cardImg.alt='Фотография '+card.name;
