@@ -5,22 +5,22 @@ const cardTemplate = document.querySelector('#card-template').content.querySelec
 const cardList = document.querySelector('.places__list');
 
 // @todo: Функция создания карточки
-function addCard(card, deleteCardClick) {
+function createCard(card, deleteCardClick) {
   const newCard = cardTemplate.cloneNode(true);
   const cardImg =newCard.querySelector('.card__image');
   cardImg.src=card.link;
   cardImg.alt='Фотография '+card.name;
   newCard.querySelector('.card__title').textContent = card.name;
-  newCard.querySelector('.card__delete-button').addEventListener('click',deleteCardClick);
+  newCard.querySelector('.card__delete-button').addEventListener('click',() => deleteCardClick(newCard));
   return newCard;
 }
 
 // @todo: Функция удаления карточки
-function deleteCard(event) {
-  event.target.parentElement.remove();
+function deleteCardClick(card) {
+  card.remove();
 }
 
 // @todo: Вывести карточки на страницу
 initialCards.forEach(element => {
-  cardList.append(addCard(element, deleteCard));
+  cardList.append(createCard(element, deleteCardClick));
 });
