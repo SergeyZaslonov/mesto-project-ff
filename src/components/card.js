@@ -1,28 +1,37 @@
 import {initialCards} from './cards.js';
+import {openImage} from './modal.js';
 
-// @todo: DOM óçëû
+// @todo: DOM ÑƒÐ·Ð»Ñ‹
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
-const cardList = document.querySelector('.places__list');
+export const cardList = document.querySelector('.places__list');
 
-// @todo: Ôóíêöèÿ ñîçäàíèÿ êàðòî÷êè
-export function createCard(card, deleteCardClick) {
+// @todo: Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ñ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ¸
+export function createCard(card, deleteCardClick, likeCardClick, openImage) {
   const newCard = cardTemplate.cloneNode(true);
   const cardImg =newCard.querySelector('.card__image');
   cardImg.src=card.link;
-  cardImg.alt='Ôîòîãðàôèÿ '+card.name;
+  cardImg.alt='Ð¤Ð¾Ñ‚Ð¾Ð³Ñ€Ð°Ñ„Ð¸Ñ '+card.name;
   newCard.querySelector('.card__title').textContent = card.name;
   newCard.querySelector('.card__delete-button').addEventListener('click',() => deleteCardClick(newCard));
+  const likeBtn=newCard.querySelector('.card__like-button');
+  likeBtn.addEventListener('click',() => likeCardClick(likeBtn));
+  cardImg.addEventListener('click',() => openImage(card));
   return newCard;
 }
 
-// @todo: Ôóíêöèÿ óäàëåíèÿ êàðòî÷êè
-export function deleteCardClick(card) {
+// @todo: Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ¸
+export function deleteCard(card) {
   card.remove();
 }
 
-// @todo: Âûâåñòè êàðòî÷êè íà ñòðàíèöó
+// @todo: Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ Ð»Ð°Ð¹Ðº ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ¸
+export function likeCard(btn) {
+  btn.classList.toggle('card__like-button_is-active');
+}
+
+// @todo: Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ¸ Ð½Ð° ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñƒ
 export function viewAllCard() {
   initialCards.forEach(element => {
-    cardList.append(createCard(element, deleteCardClick));
+    cardList.append(createCard(element, deleteCard, likeCard, openImage));
   });
 }
