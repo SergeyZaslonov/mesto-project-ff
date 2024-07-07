@@ -34,6 +34,11 @@ export function likeCard(btn) {
   btn.classList.toggle('card__like-button_is-active');
 }
 
+export function openDialogAddCard() {
+  openModal(dialogAdd);
+  formAdd.place_name.focus();
+}
+
 function saveCard(evt) {
   evt.preventDefault();
   const card = {

@@ -1,4 +1,5 @@
-import {dialogEdit, dialogAdd, formEdit} from '../scripts/index.js';
+import {dialogEdit, formEdit} from '../scripts/index.js';
+import {openDialogAddCard} from './card.js';
 
 const classOpened = 'popup_is-opened';
 const classBtnClosed = '.popup__close';
@@ -39,6 +40,7 @@ function openDialogProfileEdit() {
   openModal(dialogEdit);
   formEdit.name.value=profileTitle.textContent;
   formEdit.description.value=profileDescription.textContent;
+  formEdit.name.focus();
 }
 
 function saveProfileEdit(evt) {
@@ -46,10 +48,6 @@ function saveProfileEdit(evt) {
   profileTitle.textContent=formEdit.name.value;
   profileDescription.textContent=formEdit.description.value;
   closeModal(dialogEdit);
-}
-
-function openDialogAddCard() {
-  openModal(dialogAdd);
 }
 
 export function initModals() {
