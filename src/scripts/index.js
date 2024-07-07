@@ -1,7 +1,7 @@
 import '../pages/index.css';
 
-import {viewAllCard} from '../components/card.js';
+import {initCards} from '../components/card.js';
 import {initModals} from '../components/modal.js';
 
-viewAllCard();
+initCards();
 initModals();

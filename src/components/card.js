@@ -30,7 +30,7 @@ export function likeCard(btn) {
 }
 
 // @todo: Вывести карточки на страницу
-export function viewAllCard() {
+export function initCards() {
   initialCards.forEach(element => {
     cardList.append(createCard(element, deleteCard, likeCard, openImage));
   });
