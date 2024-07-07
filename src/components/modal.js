@@ -1,13 +1,7 @@
-import {dialogEdit, formEdit} from '../scripts/index.js';
-import {openDialogAddCard} from './card.js';
-
 const classOpened = 'popup_is-opened';
 const classBtnClosed = '.popup__close';
 
 let dlgOpened;
-
-const profileTitle = document.querySelector('.profile__title');
-const profileDescription = document.querySelector('.profile__description');
 
 export function openModal(dlg) {
   dlgOpened=dlg;
@@ -34,25 +28,4 @@ function dialogCloseByEscape(evt) {
 
 function dialogCloseByOverlay(evt) {
   if (evt.target === dlgOpened) closeModal(dlgOpened);
-}
-
-function openDialogProfileEdit() {
-  openModal(dialogEdit);
-  formEdit.name.value=profileTitle.textContent;
-  formEdit.description.value=profileDescription.textContent;
-  formEdit.name.focus();
-}
-
-function saveProfileEdit(evt) {
-  evt.preventDefault();
-  profileTitle.textContent=formEdit.name.value;
-  profileDescription.textContent=formEdit.description.value;
-  closeModal(dialogEdit);
-}
-
-export function initModals() {
-  document.querySelector('.profile__edit-button').addEventListener('click',openDialogProfileEdit);
-  document.querySelector('.profile__add-button').addEventListener('click',openDialogAddCard);
-
-  formEdit.addEventListener('submit', saveProfileEdit);
 }
