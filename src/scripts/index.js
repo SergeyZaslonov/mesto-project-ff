@@ -44,7 +44,7 @@ function saveCard(evt) {
     name: formAdd.place_name.value,
     link: formAdd.link.value,
   };
-  cardList.append(createCard(card,deleteCard,likeCard,openImage));
+  cardList.insertBefore(createCard(card,deleteCard,likeCard,openImage),cardList.firstChild);
   formAdd.reset();
   closeModal(dialogAdd);
 }

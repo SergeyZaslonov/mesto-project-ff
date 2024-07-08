@@ -1,31 +1,31 @@
 const classOpened = 'popup_is-opened';
 const classBtnClosed = '.popup__close';
 
-let OpenedDialog;
+let openedDialog;
 
-export function openModal(dlg) {
-  OpenedDialog=dlg;
-  dlg.classList.add(classOpened);
-  dlg.addEventListener('keydown', CloseDialogByEscape);
-  dlg.addEventListener('click', CloseDialogByOverlay);
-  dlg.querySelector(classBtnClosed).addEventListener('click',CloseDialogByButton);
+export function openModal(dialog) {
+  openedDialog=dialog;
+  dialog.classList.add(classOpened);
+  dialog.addEventListener('keydown', CloseDialogByEscape);
+  dialog.addEventListener('click', CloseDialogByOverlay);
+  dialog.querySelector(classBtnClosed).addEventListener('click',CloseDialogByButton);
 }
 
-export function closeModal(dlg) {
-  dlg.removeEventListener('keydown', CloseDialogByEscape);
-  dlg.removeEventListener('click', CloseDialogByOverlay);
-  dlg.querySelector(classBtnClosed).removeEventListener('click',CloseDialogByButton);
-  dlg.classList.remove(classOpened);
+export function closeModal(dialog) {
+  dialog.removeEventListener('keydown', CloseDialogByEscape);
+  dialog.removeEventListener('click', CloseDialogByOverlay);
+  dialog.querySelector(classBtnClosed).removeEventListener('click',CloseDialogByButton);
+  dialog.classList.remove(classOpened);
 }
 
 function CloseDialogByButton() {
-  closeModal(OpenedDialog);
+  closeModal(openedDialog);
 }
 
 function CloseDialogByEscape(evt) {
-  if (evt.key === 'Escape') closeModal(OpenedDialog);
+  if (evt.key === 'Escape') closeModal(openedDialog);
 }
 
 function CloseDialogByOverlay(evt) {
-  if (evt.target === OpenedDialog) closeModal(OpenedDialog);
+  if (evt.target === openedDialog) closeModal(openedDialog);
 }
