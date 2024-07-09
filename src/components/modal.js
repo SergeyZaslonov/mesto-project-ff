@@ -6,26 +6,26 @@ let openedDialog;
 export function openModal(dialog) {
   openedDialog=dialog;
   dialog.classList.add(classOpened);
-  dialog.addEventListener('keydown', CloseDialogByEscape);
-  dialog.addEventListener('click', CloseDialogByOverlay);
-  dialog.querySelector(classBtnClosed).addEventListener('click',CloseDialogByButton);
+  dialog.addEventListener('keydown', closeDialogByEscape);
+  dialog.addEventListener('click', closeDialogByOverlay);
+  dialog.querySelector(classBtnClosed).addEventListener('click',closeDialogByButton);
 }
 
 export function closeModal(dialog) {
-  dialog.removeEventListener('keydown', CloseDialogByEscape);
-  dialog.removeEventListener('click', CloseDialogByOverlay);
-  dialog.querySelector(classBtnClosed).removeEventListener('click',CloseDialogByButton);
+  dialog.removeEventListener('keydown', closeDialogByEscape);
+  dialog.removeEventListener('click', closeDialogByOverlay);
+  dialog.querySelector(classBtnClosed).removeEventListener('click',closeDialogByButton);
   dialog.classList.remove(classOpened);
 }
 
-function CloseDialogByButton() {
+function closeDialogByButton() {
   closeModal(openedDialog);
 }
 
-function CloseDialogByEscape(evt) {
+function closeDialogByEscape(evt) {
   if (evt.key === 'Escape') closeModal(openedDialog);
 }
 
-function CloseDialogByOverlay(evt) {
+function closeDialogByOverlay(evt) {
   if (evt.target === openedDialog) closeModal(openedDialog);
 }
