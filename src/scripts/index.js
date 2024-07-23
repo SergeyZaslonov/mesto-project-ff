@@ -39,7 +39,7 @@ export const configValidation = {
 };
 
 function openDialogProfileEdit() {
-  clearValidation(dialogEdit,configValidation);
+  clearValidation(formEdit,configValidation);
   openModal(dialogEdit);
   formEdit.name.value=profileTitle.textContent;
   formEdit.description.value=profileDescription.textContent;
@@ -47,7 +47,7 @@ function openDialogProfileEdit() {
 }
 
 function openDialogProfileAvatarEdit() {
-  clearValidation(dialogEditAvatar,configValidation);
+  clearValidation(formEditAvatar,configValidation);
   openModal(dialogEditAvatar);
   formEditAvatar.link.focus();
 }
@@ -76,7 +76,7 @@ function saveAvatarEdit(evt) {
 }
 
 export function openDialogAddCard(card) {
-  clearValidation(dialogAdd,configValidation);
+  clearValidation(formAdd,configValidation);
   openModal(dialogAdd);
   formAdd.place_name.focus();
 }

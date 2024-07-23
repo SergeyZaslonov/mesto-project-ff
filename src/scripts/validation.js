@@ -37,11 +37,14 @@ function hasInvalidInput(inputList) {
 }
 
 function toggleButtonState(inputList, buttonElement, config) {
-  if (hasInvalidInput(inputList)) 
+  if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(config.inactiveButtonClass)
-  else 
-    buttonElement.classList.remove(config.inactiveButtonClass)
-  
+    buttonElement.disabled = true;
+  }
+  else {
+    buttonElement.classList.remove(config.inactiveButtonClass);
+    buttonElement.disabled = false;
+  }
 }
 
 const setEventListeners = (formElement, config) => {
@@ -55,11 +58,13 @@ const setEventListeners = (formElement, config) => {
   });
 };
 
-export function clearValidation(dialog, config) {
-  const form = dialog.querySelector(config.formSelector);
-  form.querySelector(config.submitButtonSelector).classList.add(config.inactiveButtonClass);
-  const errors = dialog.querySelectorAll(config.errorSelector);
-  errors.forEach(element => {element.textContent = ''});  
+export function clearValidation(form, config) {
+  form.reset();
+  const buttonElement = form.querySelector(config.submitButtonSelector);
+  buttonElement.classList.add(config.inactiveButtonClass);
+  buttonElement.disabled = true;
+  const inputs = form.querySelectorAll(config.inputSelector);
+  inputs.forEach(input => hideInputError(form,input,config))
 }
   
 export function enableValidation(config) {
