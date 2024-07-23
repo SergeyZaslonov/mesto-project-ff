@@ -1,5 +1,4 @@
-import {dialogDelete, myProfile} from '../scripts/index.js';
-import {setLike,unsetLike} from '../scripts/api.js';
+import {myProfile, setLike,unsetLike} from '../scripts/api.js';
 
 // @todo: DOM узлы
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');

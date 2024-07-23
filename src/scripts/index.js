@@ -5,30 +5,9 @@ import {openModal, closeModal} from '../components/modal.js';
 
 import {enableValidation, clearValidation} from './validation.js';
 
-import {getMyProfile, setMyProfile, setMyAvatar, getInitialCards, postNewCard, deleteCard} from './api.js';
+import {myProfile, getMyProfile, setMyProfile, setMyAvatar, getInitialCards, postNewCard, deleteCard} from './api.js';
 
-export const myProfile = {};
-
-export const dialogEdit = document.querySelector('.popup_type_edit');
-export const dialogEditAvatar = document.querySelector('.popup_type_edit-avatar');
-export const dialogAdd = document.querySelector('.popup_type_new-card');
-export const dialogDelete = document.querySelector('.popup_type_delete_card');
-
-export const dialogImage = document.querySelector('.popup_type_image');
-
-export const formEdit = document.forms.edit_profile;
-export const formEditAvatar = document.forms.edit_avatar;
-export const formAdd = document.forms.new_place;
-
-const cardList = document.querySelector('.places__list');
-
-const profileTitle = document.querySelector('.profile__title');
-const profileDescription = document.querySelector('.profile__description');
-
-const popupImageImg = dialogImage.querySelector('.popup__image');
-const popupImageCaption = dialogImage.querySelector('.popup__caption');
-
-export const configValidation = {
+const configValidation = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
@@ -37,6 +16,31 @@ export const configValidation = {
   errorSelector: '.popup__input_error',
   errorClass: 'popup__input_error_active'
 };
+
+const dialogEdit = document.querySelector('.popup_type_edit');
+const formEdit = document.forms.edit_profile;
+const formEditSubmitButton = formEdit.querySelector(configValidation.submitButtonSelector);
+
+const dialogEditAvatar = document.querySelector('.popup_type_edit-avatar');
+const formEditAvatar = document.forms.edit_avatar;
+const formEditAvatarSubmitButton = formEditAvatar.querySelector(configValidation.submitButtonSelector);
+
+const dialogAdd = document.querySelector('.popup_type_new-card');
+const formAdd = document.forms.new_place;
+const formAddSubmitButton = formAdd.querySelector(configValidation.submitButtonSelector);
+
+const dialogDelete = document.querySelector('.popup_type_delete_card');
+const dialogDeleteSubmitButton = dialogDelete.querySelector(configValidation.submitButtonSelector)
+
+const dialogImage = document.querySelector('.popup_type_image');
+
+const cardList = document.querySelector('.places__list');
+
+const profileTitle = document.querySelector('.profile__title');
+const profileDescription = document.querySelector('.profile__description');
+
+const popupImageImg = dialogImage.querySelector('.popup__image');
+const popupImageCaption = dialogImage.querySelector('.popup__caption');
 
 function openDialogProfileEdit() {
   clearValidation(formEdit,configValidation);
@@ -53,26 +57,24 @@ function openDialogProfileAvatarEdit() {
 }
 
 function saveProfileEdit(evt) {
-  const btn = formEdit.querySelector(configValidation.submitButtonSelector);
-  btn.textContent = 'Сохранение...';
+  formEditSubmitButton.textContent = 'Сохранение...';
   evt.preventDefault();
   profileTitle.textContent=formEdit.name.value;
   profileDescription.textContent=formEdit.description.value;
   setMyProfile(formEdit.name.value,formEdit.description.value)
   .then(() => closeModal(dialogEdit))
   .catch((err) => console.log(err))
-  .finally(() => {btn.textContent = 'Сохранить'})
+  .finally(() => {formEditSubmitButton.textContent = 'Сохранить'})
 }
 
 function saveAvatarEdit(evt) {
-  const btn = formEditAvatar.querySelector(configValidation.submitButtonSelector);
-  btn.textContent = 'Сохранение...';
+  formEditAvatarSubmitButton.textContent = 'Сохранение...';
   evt.preventDefault();
   document.querySelector('.profile__image-avatar').src = formEditAvatar.link.value;
   setMyAvatar(formEditAvatar.link.value)
   .then(() => closeModal(dialogEditAvatar))
   .catch((err) => console.log(err))
-  .finally(() => {btn.textContent = 'Сохранить'})
+  .finally(() => {formEditAvatarSubmitButton.textContent = 'Сохранить'})
 }
 
 export function openDialogAddCard(card) {
@@ -82,7 +84,7 @@ export function openDialogAddCard(card) {
 }
 
 function openDialogDeleteCard(card) {
-  dialogDelete.querySelector(configValidation.submitButtonSelector).card = card;
+  dialogDeleteSubmitButton.card = card;
   openModal(dialogDelete);
 }
 

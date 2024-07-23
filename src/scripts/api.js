@@ -1,4 +1,4 @@
-import {myProfile} from './index.js';
+export const myProfile = {};
 
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/wff-cohort-18/',
