@@ -56,3 +56,25 @@ export const getInitialCards = () => {
     else return Promise.reject(res.status)
   })
 }
+
+export const setLike = (card) => {
+  return fetch(`${config.baseUrl}/cards/likes/${card.id}`, {
+    method: 'PUT',
+    headers: config.headers
+  })
+  .then((res) => {
+    if (res.ok) return res.json()
+    else return Promise.reject(res.status)
+  })
+}
+
+export const unsetLike = (card) => {
+  return fetch(`${config.baseUrl}/cards/likes/${card.id}`, {
+    method: 'DELETE',
+    headers: config.headers
+  })
+  .then((res) => {
+    if (res.ok) return res.json()
+    else return Promise.reject(res.status)
+  })
+}

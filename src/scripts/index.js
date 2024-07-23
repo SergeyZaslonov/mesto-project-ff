@@ -119,9 +119,18 @@ function initCards() {
   getInitialCards()
   .then((res) => {
     res.forEach((element) => {
-      cardList.append(createCard(element, deleteCard, likeCard, openImage));
+      const card =  createCard(element, deleteCard, likeCard, openImage);
+      const likeCount = card.querySelector('.card__like-count');
+      likeCount.textContent = element.likes.length;
+      if (element.likes.some((like) => {return like._id===myProfile.id})) { 
+        const likeBtn=card.querySelector('.card__like-button');
+        likeBtn.classList.toggle('card__like-button_is-active');
+      }
+      card.id = element._id;
+      cardList.append(card);
     })
-  });
+  })
+  .catch((err) => console.log(err));
 }
 
 initModals();
