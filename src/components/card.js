@@ -1,3 +1,5 @@
+import {openDialogDeleteCard} from '../scripts/index.js';
+
 // @todo: DOM узлы
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
 
@@ -17,6 +19,7 @@ export function createCard(card, deleteCardClick, likeCardClick, openImage) {
 
 // @todo: Функция удаления карточки
 export function deleteCard(card) {
+  openDialogDeleteCard();
   card.remove();
 }
 

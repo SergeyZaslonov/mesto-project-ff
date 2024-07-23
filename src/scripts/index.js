@@ -6,6 +6,8 @@ import {openModal, closeModal} from '../components/modal.js';
 
 export const dialogEdit = document.querySelector('.popup_type_edit');
 export const dialogAdd = document.querySelector('.popup_type_new-card');
+export const dialogDelete = document.querySelector('.popup_type_delete_card');
+
 export const dialogImage = document.querySelector('.popup_type_image');
 
 export const formEdit = document.forms.edit_profile;
@@ -36,6 +38,10 @@ function saveProfileEdit(evt) {
 export function openDialogAddCard() {
   openModal(dialogAdd);
   formAdd.place_name.focus();
+}
+
+export function openDialogDeleteCard() {
+  openModal(dialogDelete);
 }
 
 function saveCard(evt) {
