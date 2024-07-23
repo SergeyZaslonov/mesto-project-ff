@@ -3,7 +3,7 @@ import '../pages/index.css';
 import {createCard, likeCard} from '../components/card.js';
 import {openModal, closeModal} from '../components/modal.js';
 
-import {enableValidation} from './validation.js';
+import {enableValidation, clearValidation} from './validation.js';
 
 import {getMyProfile, setMyProfile, setMyAvatar, getInitialCards, postNewCard, deleteCard} from './api.js';
 
@@ -39,6 +39,7 @@ export const configValidation = {
 };
 
 function openDialogProfileEdit() {
+  clearValidation(dialogEdit,configValidation);
   openModal(dialogEdit);
   formEdit.name.value=profileTitle.textContent;
   formEdit.description.value=profileDescription.textContent;
@@ -46,6 +47,7 @@ function openDialogProfileEdit() {
 }
 
 function openDialogProfileAvatarEdit() {
+  clearValidation(dialogEditAvatar,configValidation);
   openModal(dialogEditAvatar);
   formEditAvatar.link.focus();
 }
@@ -74,6 +76,7 @@ function saveAvatarEdit(evt) {
 }
 
 export function openDialogAddCard(card) {
+  clearValidation(dialogAdd,configValidation);
   openModal(dialogAdd);
   formAdd.place_name.focus();
 }

@@ -1,6 +1,3 @@
-import {configValidation} from '../scripts/index.js';
-import {clearValidation} from '../scripts/validation.js';
-
 const classOpened = 'popup_is-opened';
 const classBtnClosed = '.popup__close';
 
@@ -8,15 +5,14 @@ let openedDialog;
 
 export function openModal(dialog) {
   openedDialog=dialog;
-  clearValidation(dialog,configValidation);
   dialog.classList.add(classOpened);
-  dialog.addEventListener('keydown', closeDialogByEscape);
+  document.addEventListener('keydown', closeDialogByEscape);
   dialog.addEventListener('click', closeDialogByOverlay);
   dialog.querySelector(classBtnClosed).addEventListener('click',closeDialogByButton);
 }
 
 export function closeModal(dialog) {
-  dialog.removeEventListener('keydown', closeDialogByEscape);
+  document.removeEventListener('keydown', closeDialogByEscape);
   dialog.removeEventListener('click', closeDialogByOverlay);
   dialog.querySelector(classBtnClosed).removeEventListener('click',closeDialogByButton);
   dialog.classList.remove(classOpened);

@@ -57,11 +57,9 @@ const setEventListeners = (formElement, config) => {
 
 export function clearValidation(dialog, config) {
   const form = dialog.querySelector(config.formSelector);
-  if (form) {
-    form.querySelector(config.submitButtonSelector).classList.add(config.inactiveButtonClass);
+  form.querySelector(config.submitButtonSelector).classList.add(config.inactiveButtonClass);
   const errors = dialog.querySelectorAll(config.errorSelector);
-  errors.forEach(element => {element.textContent = ''});
-  }  
+  errors.forEach(element => {element.textContent = ''});  
 }
   
 export function enableValidation(config) {
