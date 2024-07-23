@@ -77,7 +77,7 @@ function saveAvatarEdit(evt) {
   .finally(() => {formEditAvatarSubmitButton.textContent = 'Сохранить'})
 }
 
-export function openDialogAddCard(card) {
+function openDialogAddCard(card) {
   clearValidation(formAdd,configValidation);
   openModal(dialogAdd);
   formAdd.place_name.focus();
@@ -123,7 +123,7 @@ function saveCard(evt) {
   // };
 }
 
-export function openImage(card) {
+function openImage(card) {
   openModal(dialogImage);
   popupImageImg.src = card.link;
   popupImageImg.alt = card.name;
