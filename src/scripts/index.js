@@ -114,6 +114,7 @@ function saveCard(evt) {
   // const card = {
   //   name: 'Калининград',
   //   link: 'https://thumb.cloud.mail.ru/weblink/thumb/xw1/q76g/hPdFbeeNE',
+  //   link: 'https://thumb.cloud.mail.ru/weblink/thumb/xw1/EsCd/bnCtc5wiR'
   // };
 }
 

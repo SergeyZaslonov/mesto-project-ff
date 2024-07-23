@@ -38,14 +38,16 @@ export function likeCard(card) {
   likeBtn.classList.toggle('card__like-button_is-active');
   if (likeBtn.classList.contains('card__like-button_is-active')) {
     setLike(card)
-    .then(() => {
-      likeCount.textContent = parseInt(likeCount.textContent) +1})
+    .then((res) => {
+      likeCount.textContent = res.likes.length
+    })
     .catch((err) => console.log(err))
   } 
   else {
     unsetLike(card)
-    .then(() => {
-      likeCount.textContent = parseInt(likeCount.textContent) -1})
+    .then((res) => {
+      likeCount.textContent = res.likes.length
+    })
     .catch((err) => console.log(err))
   }
 }
