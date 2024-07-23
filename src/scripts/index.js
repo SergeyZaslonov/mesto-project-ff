@@ -129,40 +129,32 @@ function initModals() {
   document.querySelector('.profile__image').addEventListener('click',openDialogProfileAvatarEdit);
   document.querySelector('.profile__add-button').addEventListener('click',openDialogAddCard);
 
+  formAdd.addEventListener('submit', saveCard);
   formEdit.addEventListener('submit', saveProfileEdit);
   formEditAvatar.addEventListener('submit', saveAvatarEdit);
   
   dialogDelete.querySelector(configValidation.submitButtonSelector).addEventListener('click', executeDeleteCard);
 }
 
-function initProfile() {
-  getMyProfile()
-  .then((res) => {
-    myProfile.id = res._id;
-    myProfile.name = res.name;
-    myProfile.about = res.about;
-    myProfile.avatar = res.avatar;
+function initProfileAndCards() {
+  Promise.all([getMyProfile(), getInitialCards()])
+  .then (([profile, listCards]) => {
+    myProfile.id = profile._id;
+    myProfile.name = profile.name;
+    myProfile.about = profile.about;
+    myProfile.avatar = profile.avatar;
     profileTitle.textContent = myProfile.name;
     profileDescription.textContent = myProfile.about;
     document.querySelector('.profile__image-avatar').src = myProfile.avatar;
-  })
-  .catch((err) => console.log(err));
-}
 
-function initCards() {
-  formAdd.addEventListener('submit', saveCard);
-  // @todo: Вывести карточки на страницу
-  getInitialCards()
-  .then((res) => {
-    res.forEach((element) => {
+    listCards.forEach((element) => {
       const card =  createCard(element, openDialogDeleteCard, likeCard, openImage);
       cardList.append(card);
     })
-  })
+  })  
   .catch((err) => console.log(err));
 }
 
 initModals();
 enableValidation(configValidation);
-initProfile();
-initCards();
+initProfileAndCards();
