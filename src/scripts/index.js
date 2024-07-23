@@ -28,6 +28,16 @@ const profileDescription = document.querySelector('.profile__description');
 const popupImageImg = dialogImage.querySelector('.popup__image');
 const popupImageCaption = dialogImage.querySelector('.popup__caption');
 
+export const configValidation = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorSelector: '.popup__input_error',
+  errorClass: 'popup__input_error_active'
+};
+
 function openDialogProfileEdit() {
   openModal(dialogEdit);
   formEdit.name.value=profileTitle.textContent;
@@ -41,7 +51,7 @@ function openDialogProfileAvatarEdit() {
 }
 
 function saveProfileEdit(evt) {
-  const btn = formEdit.querySelector('.popup__button');
+  const btn = formEdit.querySelector(configValidation.submitButtonSelector);
   btn.textContent = 'Сохранение...';
   evt.preventDefault();
   profileTitle.textContent=formEdit.name.value;
@@ -53,7 +63,7 @@ function saveProfileEdit(evt) {
 }
 
 function saveAvatarEdit(evt) {
-  const btn = formEditAvatar.querySelector('.popup__button');
+  const btn = formEditAvatar.querySelector(configValidation.submitButtonSelector);
   btn.textContent = 'Сохранение...';
   evt.preventDefault();
   document.querySelector('.profile__image-avatar').src = formEditAvatar.link.value;
@@ -69,7 +79,7 @@ export function openDialogAddCard(card) {
 }
 
 function openDialogDeleteCard(card) {
-  dialogDelete.querySelector('.popup__button').card = card;
+  dialogDelete.querySelector(configValidation.submitButtonSelector).card = card;
   openModal(dialogDelete);
 }
 
@@ -84,7 +94,7 @@ function executeDeleteCard(evt) {
 } 
 
 function saveCard(evt) {
-  const btn = formAdd.querySelector('.popup__button');
+  const btn = formAdd.querySelector(configValidation.submitButtonSelector);
   btn.textContent = 'Сохранение...';
   evt.preventDefault();
   const card = {
@@ -122,7 +132,7 @@ function initModals() {
   formEdit.addEventListener('submit', saveProfileEdit);
   formEditAvatar.addEventListener('submit', saveAvatarEdit);
   
-  dialogDelete.querySelector('.popup__button').addEventListener('click', executeDeleteCard);
+  dialogDelete.querySelector(configValidation.submitButtonSelector).addEventListener('click', executeDeleteCard);
 }
 
 function initProfile() {
@@ -153,6 +163,6 @@ function initCards() {
 }
 
 initModals();
-enableValidation();
+enableValidation(configValidation);
 initProfile();
 initCards();
