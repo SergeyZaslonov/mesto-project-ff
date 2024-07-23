@@ -1,12 +1,34 @@
 .profile__image {
+  position: relative;
   width: 120px;
   height: 120px;
+  margin: 0 29px 0 0;
+}
+
+.profile__image-avatar {
+  width: 100%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
   background-size: cover;
   background-position: center;
-  margin: 0 29px 0 0;
+}
+
+.profile__image:hover .profile__image-avatar {
+  filter: opacity(20%); 
+  cursor: pointer;
+}
+
+.profile__image-edit {
+  position: absolute;
+  top: calc(60px - 13px);
+  left: calc(60px - 13px);
+  opacity: 0%;
+}
+
+.profile__image:hover .profile__image-edit {
+  opacity: 100%;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 740px) {
