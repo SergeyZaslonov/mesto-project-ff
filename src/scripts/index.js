@@ -53,6 +53,17 @@ function saveProfileEdit(evt) {
   .finally(() => {btn.textContent = 'Сохранить'})
 }
 
+function saveAvatarEdit(evt) {
+  const btn = formEditAvatar.querySelector('.popup__button');
+  btn.textContent = 'Сохранение...';
+  evt.preventDefault();
+  document.querySelector('.profile__image-avatar').src = formEditAvatar.link.value;
+  setMyAvatar(formEditAvatar.link.value)
+  .then(() => closeModal(dialogEditAvatar))
+  .catch((err) => console.log(err))
+  .finally(() => {btn.textContent = 'Сохранить'})
+}
+
 export function openDialogAddCard() {
   openModal(dialogAdd);
   formAdd.place_name.focus();
@@ -94,6 +105,7 @@ function initModals() {
   document.querySelector('.profile__add-button').addEventListener('click',openDialogAddCard);
 
   formEdit.addEventListener('submit', saveProfileEdit);
+  formEditAvatar.addEventListener('submit', saveAvatarEdit);
 }
 
 function initProfile() {
