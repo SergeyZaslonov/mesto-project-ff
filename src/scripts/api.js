@@ -12,10 +12,7 @@ export const getMyProfile = () => {
   return fetch(`${config.baseUrl}users/me`, {
     headers: config.headers
   })
-  .then ((res) => { 
-    if (res.ok) return res.json()
-    else return Promise.reject(res.status)
-  })
+  .then((res) =>checkResponse(res));
 }
 
 export const setMyProfile = (name, about) => {
@@ -27,10 +24,7 @@ export const setMyProfile = (name, about) => {
       about: about,
     })
   })
-  .then ((res) => { 
-    if (res.ok) return res.json()
-    else return Promise.reject(res.status)
-  })
+  .then((res) =>checkResponse(res));
 }
 
 export const setMyAvatar = (avatar) => {
@@ -41,20 +35,14 @@ export const setMyAvatar = (avatar) => {
     avatar: avatar
     })
   })
-  .then ((res) => { 
-    if (res.ok) return res.json()
-    else return Promise.reject(res.status)
-  })
+  .then((res) =>checkResponse(res));
 }
 
 export const getInitialCards = () => {
   return fetch(`${config.baseUrl}cards`, {
     headers: config.headers
   })
-  .then((res) => {
-    if (res.ok) return res.json()
-    else return Promise.reject(res.status)
-  })
+  .then((res) =>checkResponse(res));
 }
 
 export const setLike = (card) => {
@@ -62,10 +50,7 @@ export const setLike = (card) => {
     method: 'PUT',
     headers: config.headers
   })
-  .then((res) => {
-    if (res.ok) return res.json()
-    else return Promise.reject(res.status)
-  })
+  .then((res) =>checkResponse(res));
 }
 
 export const unsetLike = (card) => {
@@ -73,22 +58,16 @@ export const unsetLike = (card) => {
     method: 'DELETE',
     headers: config.headers
   })
-  .then((res) => {
-    if (res.ok) return res.json()
-    else return Promise.reject(res.status)
-  })
+  .then((res) =>checkResponse(res));
 }
 
 export const postNewCard = (card) => {
- return fetch(`${config.baseUrl}cards`, {
+  return fetch(`${config.baseUrl}cards`, {
     method: 'POST',
     headers: config.headers,
     body: JSON.stringify(card)
   })
-  .then ((res) => { 
-    if (res.ok) return res.json()
-    else return Promise.reject(res.status)
-  })
+  .then((res) =>checkResponse(res));
 }
 
 export const deleteCard = (card) => {
@@ -97,9 +76,10 @@ export const deleteCard = (card) => {
     headers: config.headers,
     body: JSON.stringify(card)
   })
-  .then ((res) => { 
-    if (res.ok) return res.json()
-    else return Promise.reject(res.status)
-  })
+  .then((res) =>checkResponse(res));
 }
 
+function checkResponse(res) {
+  if (res.ok) return res.json()
+  else return Promise.reject(`Ошибка ${res.status}`);
+}
