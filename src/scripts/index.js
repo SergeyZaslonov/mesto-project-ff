@@ -4,6 +4,8 @@ import {initialCards} from '../components/cards.js';
 import {createCard, deleteCard, likeCard} from '../components/card.js';
 import {openModal, closeModal} from '../components/modal.js';
 
+import {enableValidation} from './validation.js';
+
 export const dialogEdit = document.querySelector('.popup_type_edit');
 export const dialogEditAvatar = document.querySelector('.popup_type_edit-avatar');
 export const dialogAdd = document.querySelector('.popup_type_new-card');
@@ -87,3 +89,4 @@ function initModals() {
 
 initCards();
 initModals();
+enableValidation();
