@@ -1,12 +1,11 @@
 import '../pages/index.css';
 
-import {initialCards} from '../components/cards.js';
 import {createCard, deleteCard, likeCard} from '../components/card.js';
 import {openModal, closeModal} from '../components/modal.js';
 
 import {enableValidation} from './validation.js';
 
-import {getMyProfile, setMyProfile, setMyAvatar} from './api.js';
+import {getMyProfile, setMyProfile, setMyAvatar, getInitialCards} from './api.js';
 
 export const myProfile = {};
 
@@ -91,14 +90,6 @@ export function openImage(card) {
   popupImageCaption.textContent = card.name;
 }
 
-function initCards() {
-  formAdd.addEventListener('submit', saveCard);
-  // @todo: Вывести карточки на страницу
-  initialCards.forEach(element => {
-    cardList.append(createCard(element, deleteCard, likeCard, openImage));
-  });
-}
-
 function initModals() {
   document.querySelector('.profile__edit-button').addEventListener('click',openDialogProfileEdit);
   document.querySelector('.profile__image').addEventListener('click',openDialogProfileAvatarEdit);
@@ -122,7 +113,18 @@ function initProfile() {
   .catch((err) => console.log(err));
 }
 
-initCards();
+function initCards() {
+  formAdd.addEventListener('submit', saveCard);
+  // @todo: Вывести карточки на страницу
+  getInitialCards()
+  .then((res) => {
+    res.forEach((element) => {
+      cardList.append(createCard(element, deleteCard, likeCard, openImage));
+    })
+  });
+}
+
 initModals();
 enableValidation();
 initProfile();
+initCards();

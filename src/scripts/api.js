@@ -46,3 +46,13 @@ export const setMyAvatar = (avatar) => {
     else return Promise.reject(res.status)
   })
 }
+
+export const getInitialCards = () => {
+  return fetch(`${config.baseUrl}cards`, {
+    headers: config.headers
+  })
+  .then((res) => {
+    if (res.ok) return res.json()
+    else return Promise.reject(res.status)
+  })
+}
