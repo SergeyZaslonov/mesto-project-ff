@@ -5,6 +5,12 @@ let openedDialog;
 
 export function openModal(dialog) {
   openedDialog=dialog;
+  const form = dialog.querySelector('.popup__form');
+  if (form) {
+    form.querySelector('.popup__button').classList.add('popup__button_inactive');
+  }  
+  const errors = dialog.querySelectorAll('.popup__input_error');
+  errors.forEach(element => {element.textContent = ''});
   dialog.classList.add(classOpened);
   dialog.addEventListener('keydown', closeDialogByEscape);
   dialog.addEventListener('click', closeDialogByOverlay);

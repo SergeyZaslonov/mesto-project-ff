@@ -6,6 +6,10 @@ import {openModal, closeModal} from '../components/modal.js';
 
 import {enableValidation} from './validation.js';
 
+import {getMyProfile, setMyProfile, setMyAvatar} from './api.js';
+
+export const myProfile = {};
+
 export const dialogEdit = document.querySelector('.popup_type_edit');
 export const dialogEditAvatar = document.querySelector('.popup_type_edit-avatar');
 export const dialogAdd = document.querySelector('.popup_type_new-card');
@@ -38,10 +42,15 @@ function openDialogProfileAvatarEdit() {
 }
 
 function saveProfileEdit(evt) {
+  const btn = formEdit.querySelector('.popup__button');
+  btn.textContent = 'Сохранение...';
   evt.preventDefault();
   profileTitle.textContent=formEdit.name.value;
   profileDescription.textContent=formEdit.description.value;
-  closeModal(dialogEdit);
+  setMyProfile(formEdit.name.value,formEdit.description.value)
+  .then(() => closeModal(dialogEdit))
+  .catch((err) => console.log(err))
+  .finally(() => {btn.textContent = 'Сохранить'})
 }
 
 export function openDialogAddCard() {
@@ -87,6 +96,21 @@ function initModals() {
   formEdit.addEventListener('submit', saveProfileEdit);
 }
 
+function initProfile() {
+  getMyProfile()
+  .then((res) => {
+    myProfile.id = res._id;
+    myProfile.name = res.name;
+    myProfile.about = res.about;
+    myProfile.avatar = res.avatar;
+    profileTitle.textContent = myProfile.name;
+    profileDescription.textContent = myProfile.about;
+    document.querySelector('.profile__image-avatar').src = myProfile.avatar;
+  })
+  .catch((err) => console.log(err));
+}
+
 initCards();
 initModals();
 enableValidation();
+initProfile();
