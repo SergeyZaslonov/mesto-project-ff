@@ -1,4 +1,4 @@
-import {myProfile, openDialogDeleteCard} from '../scripts/index.js';
+import {dialogDelete, myProfile} from '../scripts/index.js';
 import {setLike,unsetLike} from '../scripts/api.js';
 
 // @todo: DOM узлы
@@ -9,9 +9,16 @@ export function createCard(card, deleteCardClick, likeCardClick, openImage) {
   const newCard = cardTemplate.cloneNode(true);
   const btnDelete = newCard.querySelector('.card__delete-button');
   const cardImg =newCard.querySelector('.card__image');
+  const likeCount = newCard.querySelector('.card__like-count');
   cardImg.src=card.link;
   cardImg.alt='Фотография '+card.name;
+  newCard.id = card._id;
   newCard.querySelector('.card__title').textContent = card.name;
+  likeCount.textContent = card.likes.length;
+  if (card.likes.some((like) => {return like._id===myProfile.id})) { 
+    const likeBtn=newCard.querySelector('.card__like-button');
+    likeBtn.classList.toggle('card__like-button_is-active');
+  }
   if (myProfile.id===card.owner._id) {
     btnDelete.addEventListener('click',() => deleteCardClick(newCard));
   }
@@ -22,12 +29,6 @@ export function createCard(card, deleteCardClick, likeCardClick, openImage) {
   }
   cardImg.addEventListener('click',() => openImage(card));
   return newCard;
-}
-
-// @todo: Функция удаления карточки
-export function deleteCard(card) {
-  openDialogDeleteCard();
-  card.remove();
 }
 
 // @todo: Функция лайк карточки

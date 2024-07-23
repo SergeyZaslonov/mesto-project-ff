@@ -1,11 +1,11 @@
 import '../pages/index.css';
 
-import {createCard, deleteCard, likeCard} from '../components/card.js';
+import {createCard, likeCard} from '../components/card.js';
 import {openModal, closeModal} from '../components/modal.js';
 
 import {enableValidation} from './validation.js';
 
-import {getMyProfile, setMyProfile, setMyAvatar, getInitialCards} from './api.js';
+import {getMyProfile, setMyProfile, setMyAvatar, getInitialCards, postNewCard, deleteCard} from './api.js';
 
 export const myProfile = {};
 
@@ -63,24 +63,48 @@ function saveAvatarEdit(evt) {
   .finally(() => {btn.textContent = 'Сохранить'})
 }
 
-export function openDialogAddCard() {
+export function openDialogAddCard(card) {
   openModal(dialogAdd);
   formAdd.place_name.focus();
 }
 
-export function openDialogDeleteCard() {
+function openDialogDeleteCard(card) {
+  dialogDelete.querySelector('.popup__button').card = card;
   openModal(dialogDelete);
 }
 
+function executeDeleteCard(evt) {
+  const card = evt.target.card;
+  deleteCard(card)
+  .then(() => {
+    card.remove();
+    closeModal(dialogDelete)
+  }) 
+  .catch((err) => console.log(err))
+} 
+
 function saveCard(evt) {
+  const btn = formAdd.querySelector('.popup__button');
+  btn.textContent = 'Сохранение...';
   evt.preventDefault();
   const card = {
     name: formAdd.place_name.value,
     link: formAdd.link.value,
+    likes: []
   };
-  cardList.prepend(createCard(card,deleteCard,likeCard,openImage));
   formAdd.reset();
-  closeModal(dialogAdd);
+  postNewCard(card)
+  .then((res) => {
+    const card =  createCard(res, openDialogDeleteCard, likeCard, openImage);
+    cardList.prepend(card);
+  })
+  .then(() => closeModal(dialogAdd))
+  .catch((err) => console.log(err))
+  .finally(() => {btn.textContent = 'Сохранить'})
+  // const card = {
+  //   name: 'Калининград',
+  //   link: 'https://thumb.cloud.mail.ru/weblink/thumb/xw1/q76g/hPdFbeeNE',
+  // };
 }
 
 export function openImage(card) {
@@ -97,6 +121,8 @@ function initModals() {
 
   formEdit.addEventListener('submit', saveProfileEdit);
   formEditAvatar.addEventListener('submit', saveAvatarEdit);
+  
+  dialogDelete.querySelector('.popup__button').addEventListener('click', executeDeleteCard);
 }
 
 function initProfile() {
@@ -119,14 +145,7 @@ function initCards() {
   getInitialCards()
   .then((res) => {
     res.forEach((element) => {
-      const card =  createCard(element, deleteCard, likeCard, openImage);
-      const likeCount = card.querySelector('.card__like-count');
-      likeCount.textContent = element.likes.length;
-      if (element.likes.some((like) => {return like._id===myProfile.id})) { 
-        const likeBtn=card.querySelector('.card__like-button');
-        likeBtn.classList.toggle('card__like-button_is-active');
-      }
-      card.id = element._id;
+      const card =  createCard(element, openDialogDeleteCard, likeCard, openImage);
       cardList.append(card);
     })
   })

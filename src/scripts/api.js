@@ -78,3 +78,28 @@ export const unsetLike = (card) => {
     else return Promise.reject(res.status)
   })
 }
+
+export const postNewCard = (card) => {
+ return fetch(`${config.baseUrl}cards`, {
+    method: 'POST',
+    headers: config.headers,
+    body: JSON.stringify(card)
+  })
+  .then ((res) => { 
+    if (res.ok) return res.json()
+    else return Promise.reject(res.status)
+  })
+}
+
+export const deleteCard = (card) => {
+  return fetch(`${config.baseUrl}cards/${card.id}`, {
+    method: 'DELETE',
+    headers: config.headers,
+    body: JSON.stringify(card)
+  })
+  .then ((res) => { 
+    if (res.ok) return res.json()
+    else return Promise.reject(res.status)
+  })
+}
+
