@@ -23,9 +23,9 @@ export function createCard(card, deleteCardClick, likeCardClick, openImage) {
   }
   else {
     btnDelete.remove();
-    const likeBtn=newCard.querySelector('.card__like-button');
-    likeBtn.addEventListener('click',() => likeCardClick(newCard));
   }
+  const likeBtn=newCard.querySelector('.card__like-button');
+  likeBtn.addEventListener('click',() => likeCardClick(newCard));
   cardImg.addEventListener('click',() => openImage(card));
   return newCard;
 }
@@ -34,10 +34,10 @@ export function createCard(card, deleteCardClick, likeCardClick, openImage) {
 export function likeCard(card) {
   const likeBtn=card.querySelector('.card__like-button');
   const likeCount = card.querySelector('.card__like-count');
-  likeBtn.classList.toggle('card__like-button_is-active');
-  if (likeBtn.classList.contains('card__like-button_is-active')) {
+  if (!likeBtn.classList.contains('card__like-button_is-active')) {
     setLike(card)
     .then((res) => {
+      likeBtn.classList.toggle('card__like-button_is-active');
       likeCount.textContent = res.likes.length
     })
     .catch((err) => console.log(err))
@@ -45,6 +45,7 @@ export function likeCard(card) {
   else {
     unsetLike(card)
     .then((res) => {
+      likeBtn.classList.toggle('card__like-button_is-active');
       likeCount.textContent = res.likes.length
     })
     .catch((err) => console.log(err))

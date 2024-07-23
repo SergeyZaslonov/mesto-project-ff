@@ -59,7 +59,6 @@ const setEventListeners = (formElement, config) => {
 };
 
 export function clearValidation(form, config) {
-  form.reset();
   const buttonElement = form.querySelector(config.submitButtonSelector);
   buttonElement.classList.add(config.inactiveButtonClass);
   buttonElement.disabled = true;

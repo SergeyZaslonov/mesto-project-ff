@@ -27,7 +27,6 @@ const formEditAvatarSubmitButton = formEditAvatar.querySelector(configValidation
 
 const dialogAdd = document.querySelector('.popup_type_new-card');
 const formAdd = document.forms.new_place;
-const formAddSubmitButton = formAdd.querySelector(configValidation.submitButtonSelector);
 
 const dialogDelete = document.querySelector('.popup_type_delete_card');
 const dialogDeleteSubmitButton = dialogDelete.querySelector(configValidation.submitButtonSelector)
@@ -44,6 +43,7 @@ const popupImageCaption = dialogImage.querySelector('.popup__caption');
 
 function openDialogProfileEdit() {
   clearValidation(formEdit,configValidation);
+  formEdit.reset();
   openModal(dialogEdit);
   formEdit.name.value=profileTitle.textContent;
   formEdit.description.value=profileDescription.textContent;
@@ -52,6 +52,7 @@ function openDialogProfileEdit() {
 
 function openDialogProfileAvatarEdit() {
   clearValidation(formEditAvatar,configValidation);
+  formEditAvatar.reset();
   openModal(dialogEditAvatar);
   formEditAvatar.link.focus();
 }
@@ -59,10 +60,12 @@ function openDialogProfileAvatarEdit() {
 function saveProfileEdit(evt) {
   formEditSubmitButton.textContent = 'Сохранение...';
   evt.preventDefault();
-  profileTitle.textContent=formEdit.name.value;
-  profileDescription.textContent=formEdit.description.value;
   setMyProfile(formEdit.name.value,formEdit.description.value)
-  .then(() => closeModal(dialogEdit))
+  .then(() => {
+    profileTitle.textContent=formEdit.name.value;
+    profileDescription.textContent=formEdit.description.value;
+    closeModal(dialogEdit)
+  })
   .catch((err) => console.log(err))
   .finally(() => {formEditSubmitButton.textContent = 'Сохранить'})
 }
@@ -70,26 +73,29 @@ function saveProfileEdit(evt) {
 function saveAvatarEdit(evt) {
   formEditAvatarSubmitButton.textContent = 'Сохранение...';
   evt.preventDefault();
-  document.querySelector('.profile__image-avatar').src = formEditAvatar.link.value;
   setMyAvatar(formEditAvatar.link.value)
-  .then(() => closeModal(dialogEditAvatar))
+  .then(() => {
+    document.querySelector('.profile__image-avatar').src = formEditAvatar.link.value;
+    closeModal(dialogEditAvatar)
+  })
   .catch((err) => console.log(err))
   .finally(() => {formEditAvatarSubmitButton.textContent = 'Сохранить'})
 }
 
 function openDialogAddCard(card) {
   clearValidation(formAdd,configValidation);
+  formAdd.reset();
   openModal(dialogAdd);
   formAdd.place_name.focus();
 }
 
 function openDialogDeleteCard(card) {
-  dialogDeleteSubmitButton.card = card;
+  dialogDelete.card = card;
   openModal(dialogDelete);
 }
 
 function executeDeleteCard(evt) {
-  const card = evt.target.card;
+  const card = dialogDelete.card;
   deleteCard(card)
   .then(() => {
     card.remove();
@@ -107,7 +113,6 @@ function saveCard(evt) {
     link: formAdd.link.value,
     likes: []
   };
-  formAdd.reset();
   postNewCard(card)
   .then((res) => {
     const card =  createCard(res, openDialogDeleteCard, likeCard, openImage);
@@ -116,11 +121,6 @@ function saveCard(evt) {
   .then(() => closeModal(dialogAdd))
   .catch((err) => console.log(err))
   .finally(() => {btn.textContent = 'Сохранить'})
-  // const card = {
-  //   name: 'Калининград',
-  //   link: 'https://thumb.cloud.mail.ru/weblink/thumb/xw1/q76g/hPdFbeeNE',
-  //   link: 'https://thumb.cloud.mail.ru/weblink/thumb/xw1/EsCd/bnCtc5wiR'
-  // };
 }
 
 function openImage(card) {
