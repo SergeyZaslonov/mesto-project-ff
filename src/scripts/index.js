@@ -5,12 +5,14 @@ import {createCard, deleteCard, likeCard} from '../components/card.js';
 import {openModal, closeModal} from '../components/modal.js';
 
 export const dialogEdit = document.querySelector('.popup_type_edit');
+export const dialogEditAvatar = document.querySelector('.popup_type_edit-avatar');
 export const dialogAdd = document.querySelector('.popup_type_new-card');
 export const dialogDelete = document.querySelector('.popup_type_delete_card');
 
 export const dialogImage = document.querySelector('.popup_type_image');
 
 export const formEdit = document.forms.edit_profile;
+export const formEditAvatar = document.forms.edit_avatar;
 export const formAdd = document.forms.new_place;
 
 const cardList = document.querySelector('.places__list');
@@ -26,6 +28,11 @@ function openDialogProfileEdit() {
   formEdit.name.value=profileTitle.textContent;
   formEdit.description.value=profileDescription.textContent;
   formEdit.name.focus();
+}
+
+function openDialogProfileAvatarEdit() {
+  openModal(dialogEditAvatar);
+  formEditAvatar.link.focus();
 }
 
 function saveProfileEdit(evt) {
@@ -72,6 +79,7 @@ function initCards() {
 
 function initModals() {
   document.querySelector('.profile__edit-button').addEventListener('click',openDialogProfileEdit);
+  document.querySelector('.profile__image').addEventListener('click',openDialogProfileAvatarEdit);
   document.querySelector('.profile__add-button').addEventListener('click',openDialogAddCard);
 
   formEdit.addEventListener('submit', saveProfileEdit);
