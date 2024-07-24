@@ -19,11 +19,9 @@ const configValidation = {
 
 const dialogEdit = document.querySelector('.popup_type_edit');
 const formEdit = document.forms.edit_profile;
-const formEditSubmitButton = formEdit.querySelector(configValidation.submitButtonSelector);
 
 const dialogEditAvatar = document.querySelector('.popup_type_edit-avatar');
 const formEditAvatar = document.forms.edit_avatar;
-const formEditAvatarSubmitButton = formEditAvatar.querySelector(configValidation.submitButtonSelector);
 
 const dialogAdd = document.querySelector('.popup_type_new-card');
 const formAdd = document.forms.new_place;
@@ -37,6 +35,7 @@ const cardList = document.querySelector('.places__list');
 
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
+const profileAvatar =document.querySelector('.profile__image-avatar');
 
 const popupImageImg = dialogImage.querySelector('.popup__image');
 const popupImageCaption = dialogImage.querySelector('.popup__caption');
@@ -58,7 +57,7 @@ function openDialogProfileAvatarEdit() {
 }
 
 function saveProfileEdit(evt) {
-  formEditSubmitButton.textContent = 'Сохранение...';
+  evt.submitter.textContent = 'Сохранение...';
   evt.preventDefault();
   setMyProfile(formEdit.name.value,formEdit.description.value)
   .then(() => {
@@ -67,19 +66,19 @@ function saveProfileEdit(evt) {
     closeModal(dialogEdit)
   })
   .catch((err) => console.log(err))
-  .finally(() => {formEditSubmitButton.textContent = 'Сохранить'})
+  .finally(() => {evt.submitter.textContent = 'Сохранить'})
 }
 
 function saveAvatarEdit(evt) {
-  formEditAvatarSubmitButton.textContent = 'Сохранение...';
+  evt.submitter.textContent = 'Сохранение...';
   evt.preventDefault();
   setMyAvatar(formEditAvatar.link.value)
   .then(() => {
-    document.querySelector('.profile__image-avatar').src = formEditAvatar.link.value;
+    profileAvatar.src = formEditAvatar.link.value;
     closeModal(dialogEditAvatar)
   })
   .catch((err) => console.log(err))
-  .finally(() => {formEditAvatarSubmitButton.textContent = 'Сохранить'})
+  .finally(() => {evt.submitter.textContent = 'Сохранить'})
 }
 
 function openDialogAddCard(card) {
@@ -105,8 +104,7 @@ function executeDeleteCard(evt) {
 } 
 
 function saveCard(evt) {
-  const btn = formAdd.querySelector(configValidation.submitButtonSelector);
-  btn.textContent = 'Сохранение...';
+  evt.submitter.textContent = 'Сохранение...';
   evt.preventDefault();
   const card = {
     name: formAdd.place_name.value,
@@ -120,7 +118,7 @@ function saveCard(evt) {
   })
   .then(() => closeModal(dialogAdd))
   .catch((err) => console.log(err))
-  .finally(() => {btn.textContent = 'Сохранить'})
+  .finally(() => {evt.submitter.textContent = 'Сохранить'})
 }
 
 function openImage(card) {
@@ -139,7 +137,7 @@ function initModals() {
   formEdit.addEventListener('submit', saveProfileEdit);
   formEditAvatar.addEventListener('submit', saveAvatarEdit);
   
-  dialogDelete.querySelector(configValidation.submitButtonSelector).addEventListener('click', executeDeleteCard);
+  dialogDeleteSubmitButton.addEventListener('click', executeDeleteCard);
 }
 
 function initProfileAndCards() {
@@ -151,7 +149,7 @@ function initProfileAndCards() {
     myProfile.avatar = profile.avatar;
     profileTitle.textContent = myProfile.name;
     profileDescription.textContent = myProfile.about;
-    document.querySelector('.profile__image-avatar').src = myProfile.avatar;
+    profileAvatar.src = myProfile.avatar;
 
     listCards.forEach((element) => {
       const card =  createCard(element, openDialogDeleteCard, likeCard, openImage);

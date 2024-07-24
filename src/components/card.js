@@ -9,23 +9,23 @@ export function createCard(card, deleteCardClick, likeCardClick, openImage) {
   const btnDelete = newCard.querySelector('.card__delete-button');
   const cardImg =newCard.querySelector('.card__image');
   const likeCount = newCard.querySelector('.card__like-count');
+  const likeBtn=newCard.querySelector('.card__like-button');
   cardImg.src=card.link;
   cardImg.alt='Фотография '+card.name;
   newCard.id = card._id;
   newCard.querySelector('.card__title').textContent = card.name;
   likeCount.textContent = card.likes.length;
-  if (card.likes.some((like) => {return like._id===myProfile.id})) { 
-    const likeBtn=newCard.querySelector('.card__like-button');
-    likeBtn.classList.toggle('card__like-button_is-active');
-  }
   if (myProfile.id===card.owner._id) {
     btnDelete.addEventListener('click',() => deleteCardClick(newCard));
   }
   else {
     btnDelete.remove();
   }
-  const likeBtn=newCard.querySelector('.card__like-button');
+
   likeBtn.addEventListener('click',() => likeCardClick(newCard));
+  if (card.likes.some((like) => {return like._id===myProfile.id})) 
+    likeBtn.classList.toggle('card__like-button_is-active');
+  
   cardImg.addEventListener('click',() => openImage(card));
   return newCard;
 }
